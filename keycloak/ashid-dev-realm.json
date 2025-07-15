@@ -63,20 +63,38 @@
   "roles": {
     "realm": [
       {
-        "name": "ashi_admin",
-        "description": "Ashid Administrator role with full access",
+        "name": "retailer_admin",
+        "description": "Retailer Administrator with store management permissions",
         "composite": false,
         "clientRole": false
       },
       {
-        "name": "customer",
-        "description": "Customer role for end users",
+        "name": "ashi_sales_representative",
+        "description": "ASHI Sales Representative managing sales operations",
         "composite": false,
         "clientRole": false
       },
       {
-        "name": "retailer",
-        "description": "Retailer role for business partners",
+        "name": "sales_associate",
+        "description": "Sales Associate handling day-to-day sales",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "purchasing_manager",
+        "description": "Purchasing Manager overseeing procurement",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "accounting_manager",
+        "description": "Accounting Manager handling financial operations",
+        "composite": false,
+        "clientRole": false
+      },
+      {
+        "name": "marketing_manager",
+        "description": "Marketing Manager managing promotional activities",
         "composite": false,
         "clientRole": false
       }
@@ -98,7 +116,7 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["ashi_admin"]
+      "realmRoles": ["retailer_admin"]
     },
     {
       "username": "customer1",
@@ -115,7 +133,7 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["customer"]
+      "realmRoles": ["sales_associate"]
     },
     {
       "username": "customer2",
@@ -132,7 +150,7 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["customer"]
+      "realmRoles": ["sales_associate"]
     },
     {
       "username": "retailer1",
@@ -149,7 +167,7 @@
           "temporary": false
         }
       ],
-      "realmRoles": ["retailer"]
+      "realmRoles": ["ashi_sales_representative"]
     }
   ],
   "defaultDefaultClientScopes": [

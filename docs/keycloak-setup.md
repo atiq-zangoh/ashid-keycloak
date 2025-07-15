@@ -51,18 +51,21 @@ make keycloak-test
 - **Standard Flow**: Enabled
 
 ### Roles
-1. **ashi_admin** - Administrator role with full access
-2. **customer** - Customer role for end users  
-3. **retailer** - Retailer role for business partners
+1. **retailer_admin** - Retailer Administrator with store management permissions
+2. **ashi_sales_representative** - ASHI Sales Representative managing sales operations
+3. **sales_associate** - Sales Associate handling day-to-day sales
+4. **purchasing_manager** - Purchasing Manager overseeing procurement
+5. **accounting_manager** - Accounting Manager handling financial operations
+6. **marketing_manager** - Marketing Manager managing promotional activities
 
 ### Default Users
 
 | Username | Email | Password | Role | Full Name |
 |----------|-------|----------|------|-----------|
-| admin | admin@ashid.com | admin123 | ashi_admin | System Administrator |
-| customer1 | customer1@ashid.com | customer123 | customer | John Doe |
-| customer2 | customer2@ashid.com | customer123 | customer | Jane Smith |
-| retailer1 | retailer1@ashid.com | retailer123 | retailer | Mike Johnson |
+| admin | admin@ashid.com | admin123 | retailer_admin | System Administrator |
+| customer1 | customer1@ashid.com | customer123 | sales_associate | John Doe |
+| customer2 | customer2@ashid.com | customer123 | sales_associate | Jane Smith |
+| retailer1 | retailer1@ashid.com | retailer123 | ashi_sales_representative | Mike Johnson |
 
 ## Manual Setup Steps
 
@@ -89,7 +92,7 @@ If you need to set up manually through the Keycloak admin console:
 
 ### 4. Create Roles
 1. Go to Roles → Add Role
-2. Create three roles: `ashi_admin`, `customer`, `retailer`
+2. Create six roles: `retailer_admin`, `ashi_sales_representative`, `sales_associate`, `purchasing_manager`, `accounting_manager`, `marketing_manager`
 
 ### 5. Create Users
 1. Go to Users → Add user

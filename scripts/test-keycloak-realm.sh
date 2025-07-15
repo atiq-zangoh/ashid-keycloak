@@ -79,14 +79,14 @@ echo "🚀 Starting user authentication tests..."
 echo ""
 
 # Test admin user
-test_user_auth "admin" "admin123" "ashi_admin"
+test_user_auth "admin" "admin123" "retailer_admin"
 
-# Test customer users
-test_user_auth "customer1" "customer123" "customer"
-test_user_auth "customer2" "customer123" "customer"
+# Test sales associate users
+test_user_auth "customer1" "customer123" "sales_associate"
+test_user_auth "customer2" "customer123" "sales_associate"
 
-# Test retailer user
-test_user_auth "retailer1" "retailer123" "retailer"
+# Test ASHI sales representative user
+test_user_auth "retailer1" "retailer123" "ashi_sales_representative"
 
 echo "🎉 All authentication tests completed!"
 echo ""
@@ -116,7 +116,7 @@ echo "  Realm Console: $KEYCLOAK_URL/admin/master/console/#/ashid-dev"
 echo "  User Account Console: $KEYCLOAK_URL/realms/$REALM_NAME/account"
 echo ""
 echo "👥 Test Users:"
-echo "  admin / admin123 (ashi_admin)"
-echo "  customer1 / customer123 (customer)"
-echo "  customer2 / customer123 (customer)"
-echo "  retailer1 / retailer123 (retailer)"
+echo "  admin / admin123 (retailer_admin)"
+echo "  customer1 / customer123 (sales_associate)"
+echo "  customer2 / customer123 (sales_associate)"
+echo "  retailer1 / retailer123 (ashi_sales_representative)"

@@ -106,41 +106,77 @@ echo "✅ Client created/verified"
 # Create realm roles
 echo "👥 Creating realm roles..."
 
-# ashi_admin role
+# retailer_admin role
 curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/roles" \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" \
     -d '{
-        "name": "ashi_admin",
-        "description": "Ashid Administrator role with full access",
+        "name": "retailer_admin",
+        "description": "Retailer Administrator with store management permissions",
         "composite": false,
         "clientRole": false,
         "containerId": "'$REALM_NAME'"
-    }' || echo "Role ashi_admin might already exist"
+    }' || echo "Role retailer_admin might already exist"
 
-# customer role
+# ashi_sales_representative role
 curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/roles" \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" \
     -d '{
-        "name": "customer",
-        "description": "Customer role for end users",
+        "name": "ashi_sales_representative",
+        "description": "ASHI Sales Representative managing sales operations",
         "composite": false,
         "clientRole": false,
         "containerId": "'$REALM_NAME'"
-    }' || echo "Role customer might already exist"
+    }' || echo "Role ashi_sales_representative might already exist"
 
-# retailer role
+# sales_associate role
 curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/roles" \
     -H "Authorization: Bearer $ADMIN_TOKEN" \
     -H "Content-Type: application/json" \
     -d '{
-        "name": "retailer",
-        "description": "Retailer role for business partners",
+        "name": "sales_associate",
+        "description": "Sales Associate handling day-to-day sales",
         "composite": false,
         "clientRole": false,
         "containerId": "'$REALM_NAME'"
-    }' || echo "Role retailer might already exist"
+    }' || echo "Role sales_associate might already exist"
+
+# purchasing_manager role
+curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/roles" \
+    -H "Authorization: Bearer $ADMIN_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "name": "purchasing_manager",
+        "description": "Purchasing Manager overseeing procurement",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "'$REALM_NAME'"
+    }' || echo "Role purchasing_manager might already exist"
+
+# accounting_manager role
+curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/roles" \
+    -H "Authorization: Bearer $ADMIN_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "name": "accounting_manager",
+        "description": "Accounting Manager handling financial operations",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "'$REALM_NAME'"
+    }' || echo "Role accounting_manager might already exist"
+
+# marketing_manager role
+curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/roles" \
+    -H "Authorization: Bearer $ADMIN_TOKEN" \
+    -H "Content-Type: application/json" \
+    -d '{
+        "name": "marketing_manager",
+        "description": "Marketing Manager managing promotional activities",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "'$REALM_NAME'"
+    }' || echo "Role marketing_manager might already exist"
 
 echo "✅ Roles created/verified"
 
@@ -245,39 +281,39 @@ get_role() {
         -H "Authorization: Bearer $ADMIN_TOKEN"
 }
 
-# Assign ashi_admin role to admin user
+# Assign retailer_admin role to admin user
 ADMIN_USER_ID=$(get_user_id "admin")
-ADMIN_ROLE=$(get_role "ashi_admin")
+ADMIN_ROLE=$(get_role "retailer_admin")
 if [ "$ADMIN_USER_ID" != "null" ] && [ "$ADMIN_USER_ID" != "" ]; then
     curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/users/$ADMIN_USER_ID/role-mappings/realm" \
         -H "Authorization: Bearer $ADMIN_TOKEN" \
         -H "Content-Type: application/json" \
         -d "[$ADMIN_ROLE]"
-    echo "✅ Assigned ashi_admin role to admin user"
+    echo "✅ Assigned retailer_admin role to admin user"
 fi
 
-# Assign customer role to customer users
-CUSTOMER_ROLE=$(get_role "customer")
+# Assign sales_associate role to customer users
+SALES_ROLE=$(get_role "sales_associate")
 for username in "customer1" "customer2"; do
     USER_ID=$(get_user_id "$username")
     if [ "$USER_ID" != "null" ] && [ "$USER_ID" != "" ]; then
         curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/users/$USER_ID/role-mappings/realm" \
             -H "Authorization: Bearer $ADMIN_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "[$CUSTOMER_ROLE]"
-        echo "✅ Assigned customer role to $username"
+            -d "[$SALES_ROLE]"
+        echo "✅ Assigned sales_associate role to $username"
     fi
 done
 
-# Assign retailer role to retailer user
+# Assign ashi_sales_representative role to retailer user
 RETAILER_USER_ID=$(get_user_id "retailer1")
-RETAILER_ROLE=$(get_role "retailer")
+REP_ROLE=$(get_role "ashi_sales_representative")
 if [ "$RETAILER_USER_ID" != "null" ] && [ "$RETAILER_USER_ID" != "" ]; then
     curl -s -X POST "$KEYCLOAK_URL/admin/realms/$REALM_NAME/users/$RETAILER_USER_ID/role-mappings/realm" \
         -H "Authorization: Bearer $ADMIN_TOKEN" \
         -H "Content-Type: application/json" \
-        -d "[$RETAILER_ROLE]"
-    echo "✅ Assigned retailer role to retailer1"
+        -d "[$REP_ROLE]"
+    echo "✅ Assigned ashi_sales_representative role to retailer1"
 fi
 
 echo ""
@@ -289,10 +325,10 @@ echo "  Client: $CLIENT_ID"
 echo "  Client Secret: ashid-client-secret"
 echo ""
 echo "👥 Users created:"
-echo "  admin (ashi_admin): admin@ashid.com / admin123"
-echo "  customer1 (customer): customer1@ashid.com / customer123"
-echo "  customer2 (customer): customer2@ashid.com / customer123"
-echo "  retailer1 (retailer): retailer1@ashid.com / retailer123"
+echo "  admin (retailer_admin): admin@ashid.com / admin123"
+echo "  customer1 (sales_associate): customer1@ashid.com / customer123"
+echo "  customer2 (sales_associate): customer2@ashid.com / customer123"
+echo "  retailer1 (ashi_sales_representative): retailer1@ashid.com / retailer123"
 echo ""
 echo "🌐 Access URLs:"
 echo "  Keycloak Admin: $KEYCLOAK_URL/admin"

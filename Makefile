@@ -75,3 +75,7 @@ keycloak-setup:
 keycloak-test:
 	@echo "Testing Keycloak realm..."
 	./scripts/test-keycloak-realm.sh
+
+keycloak-update-roles:
+	@echo "Updating Keycloak roles..."
+	./scripts/update-keycloak-roles.sh
