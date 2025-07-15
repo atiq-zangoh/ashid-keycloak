@@ -13,7 +13,7 @@ services:
     networks:
       - auth-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-authuser}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-authuser} -d ${POSTGRES_DB:-authdb}"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -63,7 +63,9 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: start-dev
+    volumes:
+      - ./keycloak:/opt/keycloak/data/import
+    command: start-dev --import-realm
 
   app:
     build: .
@@ -74,7 +76,7 @@ services:
       VAULT_TOKEN: ${VAULT_TOKEN:-myroot}
       REDIS_URL: redis://redis:6379
       KEYCLOAK_URL: ${KEYCLOAK_URL:-http://keycloak:8080}
-      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-ashid-sales-de}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM:-ashid-dev}
       SECRET_KEY: ${SECRET_KEY:-your-secret-key-here}
     ports:
       - "8000:8000"

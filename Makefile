@@ -1,4 +1,4 @@
-.PHONY: help build up down logs shell test migrate vault-init clean
+.PHONY: help build up down logs shell test migrate vault-init clean keycloak-setup keycloak-test
 
 help:
 	@echo "Available commands:"
@@ -11,6 +11,8 @@ help:
 	@echo "  make migrate     - Run database migrations"
 	@echo "  make vault-init  - Initialize Vault"
 	@echo "  make clean       - Clean up volumes and containers"
+	@echo "  make keycloak-setup - Setup Keycloak realm with users and roles"
+	@echo "  make keycloak-test  - Test Keycloak realm authentication"
 
 build:
 	docker-compose build
@@ -64,3 +66,12 @@ db-reset:
 # Generate new migration
 db-migration:
 	docker-compose exec app alembic revision --autogenerate -m "$(MSG)"
+
+# Keycloak commands
+keycloak-setup:
+	@echo "Setting up Keycloak realm..."
+	./scripts/setup-keycloak-realm.sh
+
+keycloak-test:
+	@echo "Testing Keycloak realm..."
+	./scripts/test-keycloak-realm.sh
